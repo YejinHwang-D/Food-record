@@ -1,38 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=Food-Record&fontSize=50" />
+	<div align="center">
+	<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" />
+	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
+	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
+</div>
 
-## Getting Started
+## 소개
 
-First, run the development server:
+아침, 점심, 저녁, 그리고 디저트까지 자신이 먹은 음식을 기록하는 다이어리 서비스.
 
-```bash
+## 주요 기능
+
+### 작성 기능
+
+- 카테고리 설정: 식사, 디저트, 음료, 건강 등
+- 음식명
+- 한줄평가
+- 방문날짜
+- 상호명: 카카오지도 API 사용
+- 대표사진
+
+### 카드뷰 기능
+
+- 카테고리, 음식명, 한줄평가, 상호명(지도없이 텍스트 링크이동), 대표사진(작게), 방문날짜
+
+### 검색 기능
+
+- 카드뷰 상단에 위치, 검색 시 일치하는 카드만 노출
+
+### 카테고리 및 추천도 정렬 기능
+
+- 카테고리, 추천도에 따라 카드뷰 정렬
+
+## 스타일
+
+### 카드 뒤집기 애니메이션
+
+- 앞면: 카테고리, 음식명, 방문날짜, 대표사진
+- 뒷면: 한줄평가, 상호명
+
+## Start!
+
+```shell
+git clone https://github.com/YejinHwang-D/Food-record.git
+cd Food-record
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
