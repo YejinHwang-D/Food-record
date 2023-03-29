@@ -44,5 +44,6 @@
 ```shell
 git clone https://github.com/YejinHwang-D/Food-record.git
 cd Food-record
+npm install
 npm run dev
 ```
