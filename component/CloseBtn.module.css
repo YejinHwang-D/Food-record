@@ -1,0 +1,27 @@
+.close_section {
+  width: 90%;
+  height: 10%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close_section button {
+  border: none;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  color: var(--text-dark-gray-color);
+  margin-top: 1em;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.close_section button:hover {
+  transform: scale(1.1);
+}
+
+.close_icon {
+  fill: var(--text-dark-blue-color);
+  width: 1em;
+  margin: 0.5vw;
+}

@@ -1,0 +1,37 @@
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: inherit;
+}
+
+.source,
+.info {
+  background-color: var(--bg-main-color);
+  border-radius: 20px;
+  font-size: 0.8em;
+  border: 1vw solid var(--bg-main-color);
+  margin: 1vw;
+}
+
+.info div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.info span {
+  margin: 0.5vw;
+}
+
+.github_icon {
+  width: 2em;
+  margin: 0.5vw;
+}
+
+.github_icon:hover {
+  cursor: pointer;
+}
+
+.github_icon:active {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
