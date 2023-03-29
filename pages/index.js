@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { MongoClient } from 'mongodb';
 import Header from '../component/Header';
 import Footer from '../component/Footer';
 import Login from '@/component/Login';
@@ -71,7 +72,6 @@ function HomePage(props) {
   const [loginModal, setLoginModal] = useState(false);
 
   async function addFoodItem(enteredData, onClose) {
-    console.log('addFoodItem!!: ', enteredData);
     const res = await fetch('/api/addFoodItem', {
       method: 'POST',
       body: JSON.stringify(enteredData),
@@ -79,9 +79,7 @@ function HomePage(props) {
         'Content-Type': 'application/json',
       },
     });
-
     const data = await res.json();
-    console.log(data);
     onClose();
   }
 
@@ -102,12 +100,30 @@ function HomePage(props) {
   );
 }
 
-export function getStaticProps() {
+export async function getStaticProps() {
+  const client = await MongoClient.connect(
+    `mongodb+srv://yejin:hyj981017@nextjs-meeting.zmaqtkw.mongodb.net/food-record?retryWrites=true&w=majority`
+  );
+  const db = client.db();
+  const meetupCollection = db.collection('food-item');
+  const result = await meetupCollection.find().toArray();
+  client.close();
+
   return {
     props: {
-      data: DUMMY_DATA,
+      data: result.map((val) => ({
+        id: val._id.toString(),
+        category: val.category,
+        food_name: val.food_name,
+        date: val.date,
+        store_name: val.store_name,
+        comment: val.comment,
+        image: val.image,
+        score: val.score,
+        address: null,
+      })),
     },
-    revalidate: 1,
+    revalidate: 10,
   };
 }
 

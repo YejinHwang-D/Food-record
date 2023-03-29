@@ -50,14 +50,15 @@ function Main(props) {
     });
   };
 
-  const testData = props.data;
-  const CardList = testData.map((ele, index) => {
+  const loadedData = props.data;
+  console.log('::: ', filtering.rating);
+  const CardList = loadedData.map((ele) => {
     return filtering.category === '' ? (
       filtering.rating <= ele.score ? (
-        <CardView value={ele} key={index} />
+        <CardView value={ele} key={ele.id} />
       ) : null
     ) : filtering.category === ele.category && filtering.rating <= ele.score ? (
-      <CardView value={ele} key={index} />
+      <CardView value={ele} key={ele.id} />
     ) : null;
   });
 

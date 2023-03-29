@@ -10,6 +10,7 @@ function Dialog({ onClose, onAddItem }) {
     store_name: '',
     comment: '',
     image: '',
+    score: null,
   });
   const image_preview = useRef();
   const image_input = useRef();
@@ -96,7 +97,15 @@ function Dialog({ onClose, onAddItem }) {
                 rows="5"
                 onChange={handleChange}
               ></textarea>
-              <p>입력하신 곳이 아래 주소가 맞나요?</p>
+              <label htmlFor="score">평점</label>
+              <input
+                required
+                name="score"
+                id="score"
+                type="number"
+                onChange={handleChange}
+                pattern="[0-5]{0,1}$"
+              />
             </div>
             <div className={classes.right_section}>
               <p>이미지는 하나만 등록 가능해요.</p>
