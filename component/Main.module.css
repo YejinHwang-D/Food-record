@@ -17,7 +17,7 @@
   background-color: var(--bg-main-color);
   border-radius: 50%;
   border: 1em solid var(--bg-main-color);
-  margin: 2em;
+  margin: 1.5em;
   display: flex;
   justify-content: center;
   align-items: center;

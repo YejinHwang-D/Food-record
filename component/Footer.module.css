@@ -2,6 +2,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: inherit;
+  margin-top: 5em;
 }
 
 .source,
@@ -9,8 +10,8 @@
   background-color: var(--bg-main-color);
   border-radius: 20px;
   font-size: 0.8em;
-  border: 1vw solid var(--bg-main-color);
-  margin: 1vw;
+  border: 1em solid var(--bg-main-color);
+  margin: 1em;
 }
 
 .info div {

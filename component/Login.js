@@ -47,7 +47,10 @@ function Login({ onClose }) {
     } else {
       try {
         const result = await createUser(enteredData);
-        console.log(result);
+        alert(
+          '회원이 되신 것을 축하드려요! \n 앞으로 푸드레코드에 맛있는 기록을 남겨주세요. :)'
+        );
+        onClose();
       } catch (error) {
         console.log(error);
       }
