@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { getSession } from 'next-auth/client';
 import { MongoClient } from 'mongodb';
 import Header from '../component/Header';
 import Footer from '../component/Footer';
@@ -16,7 +17,8 @@ function HomePage(props) {
         'Content-Type': 'application/json',
       },
     });
-    const data = await res.json();
+    await res.json();
+    alert('기록이 맛있게 저장되었어요!');
     onClose();
   }
 
@@ -38,13 +40,20 @@ function HomePage(props) {
   );
 }
 
-export async function getStaticProps() {
+// export async function getServerSideProps(context) {
+//   const req = context.req;
+//   console.log(req);
+// }
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
   const client = await MongoClient.connect(
     `mongodb+srv://yejin:hyj981017@nextjs-meeting.zmaqtkw.mongodb.net/food-record?retryWrites=true&w=majority`
   );
   const db = client.db();
   const meetupCollection = db.collection('food-item');
-  const result = await meetupCollection.find().toArray();
+  const result = await meetupCollection
+    .find({ writer: session.user.name })
+    .toArray();
   client.close();
 
   return {
@@ -61,7 +70,6 @@ export async function getStaticProps() {
         address: null,
       })),
     },
-    revalidate: 10,
   };
 }
 
