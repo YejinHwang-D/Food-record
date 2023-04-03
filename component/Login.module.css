@@ -104,6 +104,9 @@
 }
 
 @media screen and (max-width: 1000px) {
+  .modal_section.sign {
+    width: 80%;
+  }
   .modal_section .sign_section {
     flex-direction: column;
   }

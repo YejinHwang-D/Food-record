@@ -1,15 +1,57 @@
-import React from 'react';
 import CloseBtn from './CloseBtn';
+import Signin from './LoginCompo/Signin';
+import Signup from './LoginCompo/Signup';
 import classes from './Login.module.css';
+import { useState } from 'react';
+import { signIn } from 'next-auth/client';
+import { Router } from 'next/router';
+
+async function createUser(enteredData) {
+  const response = await fetch('/api/auth/signup', {
+    method: 'POST',
+    body: JSON.stringify(enteredData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Something went wrong...');
+  }
+  return data;
+}
 
 function Login({ onClose }) {
+  const [isLogin, setIsLogin] = useState(true);
+
   function closeHandling(e) {
     onClose();
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('login');
+  function switchSignModeHandler() {
+    setIsLogin(!isLogin);
+  }
+
+  async function signHandler(enteredData) {
+    if (isLogin) {
+      const result = await signIn('credentials', {
+        redirect: false,
+        id: enteredData.id,
+        password: enteredData.password,
+      });
+      if (!result.error) {
+        alert('환영합니다! 오늘도 맛있는 식사하셨나요?');
+        onClose();
+      }
+    } else {
+      try {
+        const result = await createUser(enteredData);
+        console.log(result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   return (
@@ -17,36 +59,17 @@ function Login({ onClose }) {
       <div className={`${classes.modal_section} ${classes.sign}`}>
         <CloseBtn closeHandling={closeHandling} />
         <div className={classes.sign_section}>
-          <form className={classes.signin} onSubmit={handleSubmit}>
-            <p>로그인</p>
-            <div>
-              <label htmlFor="id">아이디</label>
-              <input
-                className={classes.modal_input}
-                id="id"
-                placeholder="아이디를 입력해주세요."
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="password">비밀번호</label>
-              <input
-                className={classes.modal_input}
-                id="password"
-                type="password"
-                placeholder="비밀번호를 입력해주세요."
-              ></input>
-            </div>
-
-            <button className={classes.modal_btn} type="submit">
-              로그인
-            </button>
-          </form>
-          <div className={classes.signup}>
-            <p>{`아직 회원이 아니신가요?\n푸드레코드와 함께 해주세요!`}</p>
-            <button className={`${classes.modal_btn} ${classes.signup_btn}`}>
-              회원가입
-            </button>
-          </div>
+          {isLogin ? (
+            <Signin
+              signinHandler={signHandler}
+              switchSignModeHandler={switchSignModeHandler}
+            />
+          ) : (
+            <Signup
+              signupHandler={signHandler}
+              witchSignModeHandler={switchSignModeHandler}
+            />
+          )}
         </div>
       </div>
     </div>

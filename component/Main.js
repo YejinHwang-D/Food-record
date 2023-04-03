@@ -51,7 +51,6 @@ function Main(props) {
   };
 
   const loadedData = props.data;
-  console.log('::: ', filtering.rating);
   const CardList = loadedData.map((ele) => {
     return filtering.category === '' ? (
       filtering.rating <= ele.score ? (

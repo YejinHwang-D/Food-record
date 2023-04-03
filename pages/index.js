@@ -5,69 +5,6 @@ import Footer from '../component/Footer';
 import Login from '@/component/Login';
 import Main from '@/component/Main';
 
-const DUMMY_DATA = [
-  {
-    category: '음료',
-    food_name: '오징어볶음',
-    store_name: '별내 오징어볶음',
-    comment: '맛있고 친절했다. 다음에 또 가긴 갈듯...?',
-    score: 5,
-    date: '2023.03.06',
-    image: null,
-    address: '',
-  },
-  {
-    category: '음료',
-    food_name: '오징어볶음',
-    store_name: '별내 오징어볶음',
-    comment: '맛있고 친절했다. 다음에 또 가긴 갈듯...?',
-    score: 4,
-    date: '2023.03.07',
-    image: null,
-    address: '',
-  },
-  {
-    category: '음료',
-    food_name: '오징어볶음',
-    store_name: '별내 오징어볶음',
-    comment: '맛있고 친절했다. 다음에 또 가긴 갈듯...?',
-    score: 5,
-    date: '2023.03.08',
-    image: null,
-    address: '',
-  },
-  {
-    category: '음료',
-    food_name: '오징어볶음',
-    store_name: '백반집',
-    comment: '그냥 그랬다.. 가격이 너무 비쌌음.',
-    score: 3,
-    date: '2023.03.09',
-    image: null,
-    address: '',
-  },
-  {
-    category: '음료',
-    food_name: '오징어볶음',
-    store_name: '별내 오징어볶음',
-    comment: '불친절했음 ㅠㅠ',
-    score: 1,
-    date: '2023.03.10',
-    image: null,
-    address: '',
-  },
-  {
-    category: '음료',
-    food_name: '오징어볶음',
-    store_name: '별내 오징어볶음',
-    comment: '맛있고 친절했다. 다음에 또 가긴 갈듯...?',
-    score: 5,
-    date: '2023.03.11',
-    image: null,
-    address: '',
-  },
-];
-
 function HomePage(props) {
   const [loginModal, setLoginModal] = useState(false);
 
@@ -86,9 +23,10 @@ function HomePage(props) {
   function openLoginModal() {
     setLoginModal(true);
   }
-  const closeLoginModal = () => {
+
+  function closeLoginModal() {
     setLoginModal(false);
-  };
+  }
 
   return (
     <Fragment>
