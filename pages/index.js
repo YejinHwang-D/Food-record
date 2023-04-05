@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, use, useEffect, useState } from 'react';
 import { getSession } from 'next-auth/client';
 import { MongoClient } from 'mongodb';
 import Header from '../component/Header';
@@ -9,17 +9,28 @@ import Main from '@/component/Main';
 function HomePage(props) {
   const [loginModal, setLoginModal] = useState(false);
 
-  async function addFoodItem(enteredData, onClose) {
-    const res = await fetch('/api/addFoodItem', {
-      method: 'POST',
-      body: JSON.stringify(enteredData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    await res.json();
-    alert('기록이 맛있게 저장되었어요!');
-    onClose();
+  async function addFoodItem(enteredData, onClose, setMainData) {
+    const session = await getSession();
+    if (!session) {
+      alert(
+        '앗! 푸드레코드 회원이 아니시군요? \n회원이 되시면 기록하실수 있어요. :)'
+      );
+      onClose();
+      setLoginModal(true);
+    } else {
+      const res = await fetch('/api/addFoodItem', {
+        method: 'POST',
+        body: JSON.stringify(enteredData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      await res.json();
+      setMainData((prev) => [...prev, enteredData]);
+      alert('기록이 맛있게 저장되었어요!');
+      onClose();
+    }
+    URL.revokeObjectURL(enteredData.image);
   }
 
   function openLoginModal() {
@@ -40,21 +51,22 @@ function HomePage(props) {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const req = context.req;
-//   console.log(req);
-// }
 export async function getServerSideProps(context) {
+  let result;
   const session = await getSession({ req: context.req });
   const client = await MongoClient.connect(
     `mongodb+srv://yejin:hyj981017@nextjs-meeting.zmaqtkw.mongodb.net/food-record?retryWrites=true&w=majority`
   );
   const db = client.db();
   const meetupCollection = db.collection('food-item');
-  const result = await meetupCollection
-    .find({ writer: session.user.name })
-    .toArray();
-  client.close();
+  if (session) {
+    result = await meetupCollection
+      .find({ writer: session.user.name })
+      .toArray();
+    client.close();
+  } else {
+    result = [];
+  }
 
   return {
     props: {

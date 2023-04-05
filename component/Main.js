@@ -6,6 +6,7 @@ import Search from '../assets/magnifying-glass-solid.svg';
 import classes from './Main.module.css';
 
 function Main(props) {
+  const [mainData, setMainData] = useState(props.data);
   const [search, setSearch] = useState({
     category: '',
     keyword: '',
@@ -50,21 +51,24 @@ function Main(props) {
     });
   };
 
-  const loadedData = props.data;
-  const CardList = loadedData.map((ele) => {
+  const CardList = mainData.map((ele, index) => {
     return filtering.category === '' ? (
       filtering.rating <= ele.score ? (
-        <CardView value={ele} key={ele.id} />
+        <CardView value={ele} key={index} />
       ) : null
     ) : filtering.category === ele.category && filtering.rating <= ele.score ? (
-      <CardView value={ele} key={ele.id} />
+      <CardView value={ele} key={index} />
     ) : null;
   });
 
   return (
     <main className={classes.main}>
       {addModalState && (
-        <Dialog onClose={closeAddModal} onAddItem={props.onAddItem} />
+        <Dialog
+          onClose={closeAddModal}
+          onAddItem={props.onAddItem}
+          setMainData={setMainData}
+        />
       )}
       <div className={classes.main_text}>
         <span>오늘도 맛있는 음식을 드셨나요?</span>

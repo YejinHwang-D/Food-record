@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import CloseBtn from './CloseBtn';
+import AddressModal from './Address/AddressModal';
 import classes from './Dialog.module.css';
 
-function Dialog({ onClose, onAddItem }) {
+function Dialog({ onClose, onAddItem, setMainData }) {
   const [inputs, setInputs] = useState({
     category: '',
     food_name: '',
@@ -12,14 +13,19 @@ function Dialog({ onClose, onAddItem }) {
     image: '',
     score: null,
   });
+  const [addrModal, setAddrModal] = useState(false);
   const image_preview = useRef();
   const image_input = useRef();
 
   function handleChange(e) {
     let { name, value } = e.target;
     if (name === 'image') {
+      const img = new Blob([e.target.files[0]], {
+        type: e.target.files[0].type,
+      });
+      value = img;
+
       const imgURL = URL.createObjectURL(e.target.files[0]);
-      value = imgURL;
       image_input.current.setAttribute('style', 'display: none;');
       image_preview.current.setAttribute('style', 'display: flex');
       image_preview.current.children[0].setAttribute('src', imgURL);
@@ -33,16 +39,25 @@ function Dialog({ onClose, onAddItem }) {
 
   function submitHandling(e) {
     e.preventDefault();
-    onAddItem(inputs, onClose);
+    onAddItem(inputs, onClose, setMainData);
   }
 
   function closeHandling(e) {
     onClose();
   }
 
+  function openAddr() {
+    setAddrModal(true);
+  }
+
+  function closeAddr() {
+    setAddrModal(false);
+  }
+
   return (
     <div className={classes.modal_background}>
       <div className={classes.modal_section}>
+        {addrModal && <AddressModal closeHandling={closeAddr} />}
         <CloseBtn closeHandling={closeHandling} />
         <form className={classes.dialog_form} onSubmit={submitHandling}>
           <div className={classes.form_section}>
@@ -87,7 +102,11 @@ function Dialog({ onClose, onAddItem }) {
                 id="store_name"
                 onChange={handleChange}
               ></input>
+              <button type="button" onClick={openAddr}>
+                상호명 찾기
+              </button>
             </div>
+
             <div className={classes.middle_section}>
               <label htmlFor="comment">한줄평가</label>
               <textarea
