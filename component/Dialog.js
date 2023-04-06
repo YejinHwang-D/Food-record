@@ -12,6 +12,7 @@ function Dialog({ onClose, onAddItem, setMainData }) {
     comment: '',
     image: '',
     score: null,
+    address: '',
   });
   const [addrModal, setAddrModal] = useState(false);
   const image_preview = useRef();
@@ -42,6 +43,15 @@ function Dialog({ onClose, onAddItem, setMainData }) {
     onAddItem(inputs, onClose, setMainData);
   }
 
+  function addrInputHandling(enteredData) {
+    console.log('함수 실행~', enteredData);
+    setInputs({
+      ...inputs,
+      address: enteredData,
+    });
+    closeAddr();
+  }
+
   function closeHandling(e) {
     onClose();
   }
@@ -57,7 +67,12 @@ function Dialog({ onClose, onAddItem, setMainData }) {
   return (
     <div className={classes.modal_background}>
       <div className={classes.modal_section}>
-        {addrModal && <AddressModal closeHandling={closeAddr} />}
+        {addrModal && (
+          <AddressModal
+            closeHandling={closeAddr}
+            addrInputHandling={addrInputHandling}
+          />
+        )}
         <CloseBtn closeHandling={closeHandling} />
         <form className={classes.dialog_form} onSubmit={submitHandling}>
           <div className={classes.form_section}>
@@ -100,6 +115,7 @@ function Dialog({ onClose, onAddItem, setMainData }) {
                 className="modal_input"
                 name="store_name"
                 id="store_name"
+                value={inputs.address.place_name}
                 onChange={handleChange}
               ></input>
               <button type="button" onClick={openAddr}>

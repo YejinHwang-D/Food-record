@@ -79,7 +79,7 @@ export async function getServerSideProps(context) {
         comment: val.comment,
         image: val.image,
         score: val.score,
-        address: null,
+        address: val.address,
       })),
     },
   };

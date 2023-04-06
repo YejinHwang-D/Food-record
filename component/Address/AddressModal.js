@@ -3,7 +3,7 @@ import CloseBtn from '../CloseBtn';
 import classes from './AddressModal.module.css';
 import MapContainer from './MapContainer';
 
-function AddressModal({ closeHandling }) {
+function AddressModal({ closeHandling, addrInputHandling }) {
   const [inputText, setInputText] = useState('');
   const [place, setPlace] = useState('');
 
@@ -31,7 +31,10 @@ function AddressModal({ closeHandling }) {
               />
               <button type="submit">검색</button>
             </form>
-            <MapContainer searchPlace={place} />
+            <MapContainer
+              searchPlace={place}
+              addrInputHandling={addrInputHandling}
+            />
           </div>
         </div>
       </div>
