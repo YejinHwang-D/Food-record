@@ -39,6 +39,9 @@
 
 .form_section label {
   color: var(--text-dark-blue-color);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1%;
 }
 
 .left_section {
@@ -65,7 +68,7 @@
 
 .modal_input {
   border-radius: 10px;
-  height: 2em;
+  height: 1.5em;
   width: 12em;
   vertical-align: top;
   border: 1px solid var(--text-dark-blue-color);
@@ -138,8 +141,24 @@
   height: 100%;
 }
 
-.right_section .input_file {
+.input_file {
   display: none;
+}
+
+.input_file_btn {
+  display: none;
+}
+
+.addr_btn {
+  width: 7em;
+  height: 2em;
+  border-radius: 10px;
+  border: none;
+  color: var(--text-dark-gray-color);
+  background-color: var(--text-light-blue-color);
+  cursor: pointer;
+  margin-top: 1%;
+  transition: all 0.4s;
 }
 
 .modal_btn {

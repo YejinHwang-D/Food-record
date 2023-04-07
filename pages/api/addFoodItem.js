@@ -21,8 +21,7 @@ async function hadnler(req, res) {
   );
   const db = client.db();
   const meetupCollection = db.collection('food-item');
-  const result = await meetupCollection.insertOne(data);
-  console.log(result);
+  await meetupCollection.insertOne(data);
   client.close();
 
   res.status(201).json({ message: 'sucees to post card!' });

@@ -31,8 +31,6 @@ function MapContainer({ searchPlace, addrInputHandling }) {
   }
 
   function placesSearchCB(data, status) {
-    console.log('data: ', data);
-    console.log('status: ', status);
     if (status === kakao.maps.services.Status.OK) {
       displayPlaces(data);
       let bounds = new kakao.maps.LatLngBounds();
@@ -42,7 +40,6 @@ function MapContainer({ searchPlace, addrInputHandling }) {
         bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
       }
       map.setBounds(bounds);
-      console.log(map.a);
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
       alert('검색 결과가 없습니다.');
       return;

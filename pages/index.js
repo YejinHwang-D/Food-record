@@ -26,6 +26,7 @@ function HomePage(props) {
         },
       });
       await res.json();
+
       setMainData((prev) => [...prev, enteredData]);
       alert('기록이 맛있게 저장되었어요!');
       onClose();
