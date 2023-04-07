@@ -103,9 +103,9 @@ function MapContainer({ searchPlace, addrInputHandling }) {
       (index + 1) +
       '"></span>' +
       '<div class="info">' +
-      '   <h5>' +
+      '   <p>' +
       places.place_name +
-      '</h5>';
+      '</p>';
 
     if (places.road_address_name) {
       item_str +=
@@ -158,7 +158,7 @@ function MapContainer({ searchPlace, addrInputHandling }) {
   return (
     <section className={classes.address_section}>
       <div className={classes.map_list} ref={map_list_container}></div>
-      <div className={classes.map_div} ref={map_container}></div>;
+      <div className={classes.map_div} ref={map_container}></div>
     </section>
   );
 }

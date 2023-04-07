@@ -28,8 +28,11 @@ function AddressModal({ closeHandling, addrInputHandling }) {
                 placeholder="검색어를 입력하세요"
                 onChange={onChange}
                 value={inputText}
+                className={classes.keyword_input}
               />
-              <button type="submit">검색</button>
+              <button type="submit" className={classes.search_btn}>
+                검색
+              </button>
             </form>
             <MapContainer
               searchPlace={place}

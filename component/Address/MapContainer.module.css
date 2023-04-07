@@ -1,6 +1,5 @@
 .address_section {
   display: flex;
-  flex-flow: row;
   width: 100%;
   height: 80%;
   overflow: hidden;
@@ -16,11 +15,49 @@
   flex-direction: column;
   list-style: none;
   font-size: 0.8em;
-  overflow-y: scroll;
+  overflow-y: overlay;
   width: 40%;
+  height: 90%;
   padding: 2%;
 }
 
+.map_list::-webkit-scrollbar {
+  background-color: inherit;
+}
+.map_list::-webkit-scrollbar-thumb {
+  background-color: #f7f7f7;
+  border-radius: 10px;
+}
+
 .map_list li {
+  padding: 0.5em;
+  border: 3px solid #f7f7f7;
+  margin-bottom: 0.5em;
   cursor: pointer;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+}
+
+.map_list li p {
+  font-weight: bold;
+}
+
+.map_list li span {
+  font-size: 0.9em;
+}
+
+@media screen and (max-width: 1000px) {
+  .address_section {
+    flex-direction: column;
+  }
+  .map_list {
+    width: 100%;
+    height: 30%;
+    overflow-y: scroll;
+  }
+  .map_div {
+    width: 100%;
+    height: 60%;
+    border-radius: 0 0 20px 20px;
+  }
 }
