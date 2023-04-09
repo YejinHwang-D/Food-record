@@ -17,13 +17,13 @@ function Main(props) {
   });
   const [addModalState, setAddModalState] = useState(false);
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     const { name, value } = e.target;
     setSearch({
       ...search,
       [name]: value,
     });
-  };
+  }
 
   const openAddModal = () => {
     setAddModalState(true);
@@ -43,7 +43,6 @@ function Main(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('메인 검색 결과입니다: ', search);
     setSearch({
       ...search,
       category: '',

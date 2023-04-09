@@ -63,6 +63,7 @@ export async function getServerSideProps(context) {
   if (session) {
     result = await meetupCollection
       .find({ writer: session.user.name })
+      .sort({ date: -1 })
       .toArray();
     client.close();
   } else {

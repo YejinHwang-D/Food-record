@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import CloseBtn from './CloseBtn';
 import AddressModal from './Address/AddressModal';
 import classes from './Dialog.module.css';

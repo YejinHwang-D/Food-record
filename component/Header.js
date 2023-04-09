@@ -1,12 +1,15 @@
 import { useSession, signOut } from 'next-auth/client';
 import classes from './Header.module.css';
+import { useRouter } from 'next/router';
 
 function Header({ onLoginClick }) {
   const [session, loading] = useSession();
+  const router = useRouter();
 
   function singOut() {
     alert('로그아웃되었습니다. 다시 찾아주실거죠?');
     signOut();
+    router.replace('/');
   }
 
   const openLogin = () => {

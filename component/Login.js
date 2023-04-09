@@ -4,7 +4,7 @@ import Signup from './LoginCompo/Signup';
 import classes from './Login.module.css';
 import { useState } from 'react';
 import { signIn } from 'next-auth/client';
-import { Router } from 'next/router';
+import { useRouter } from 'next/router';
 
 async function createUser(enteredData) {
   const response = await fetch('/api/auth/signup', {
@@ -24,6 +24,7 @@ async function createUser(enteredData) {
 
 function Login({ onClose }) {
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
 
   function closeHandling(e) {
     onClose();
@@ -43,6 +44,7 @@ function Login({ onClose }) {
       if (!result.error) {
         alert('환영합니다! 오늘도 맛있는 식사하셨나요?');
         onClose();
+        router.replace('/');
       }
     } else {
       try {
