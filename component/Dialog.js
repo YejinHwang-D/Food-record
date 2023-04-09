@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
+import useModals from './custom/useModals';
 import CloseBtn from './CloseBtn';
 import AddressModal from './Address/AddressModal';
 import classes from './Dialog.module.css';
 
-function Dialog({ onClose, onAddItem, setMainData }) {
+function Dialog({ onAddItem, onClose, setMainData }) {
   const [inputs, setInputs] = useState({
     category: '',
     food_name: '',
@@ -14,7 +15,6 @@ function Dialog({ onClose, onAddItem, setMainData }) {
     score: null,
     address: '',
   });
-  const [addrModal, setAddrModal] = useState(false);
   const image_preview = useRef();
   const image_input = useRef();
 
@@ -50,28 +50,22 @@ function Dialog({ onClose, onAddItem, setMainData }) {
     closeAddr();
   }
 
-  function closeHandling(e) {
-    onClose();
-  }
+  const { openModal, closeModal } = useModals();
+  const closeAddr = () => {
+    closeModal(AddressModal);
+  };
 
-  function openAddr() {
-    setAddrModal(true);
-  }
-
-  function closeAddr() {
-    setAddrModal(false);
-  }
+  const openAddr = () => {
+    openModal(AddressModal, {
+      closeHandling: closeAddr,
+      addrInputHandling: addrInputHandling,
+    });
+  };
 
   return (
     <div className={classes.modal_background}>
       <div className={classes.modal_section}>
-        {addrModal && (
-          <AddressModal
-            closeHandling={closeAddr}
-            addrInputHandling={addrInputHandling}
-          />
-        )}
-        <CloseBtn closeHandling={closeHandling} />
+        <CloseBtn closeHandling={onClose} />
         <form className={classes.dialog_form} onSubmit={submitHandling}>
           <div className={classes.form_section}>
             <div className={classes.left_section}>

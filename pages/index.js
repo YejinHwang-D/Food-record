@@ -1,10 +1,11 @@
-import { Fragment, use, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { getSession } from 'next-auth/client';
 import { MongoClient } from 'mongodb';
 import Header from '../component/Header';
 import Footer from '../component/Footer';
 import Login from '@/component/Login';
 import Main from '@/component/Main';
+import useModals from '@/component/custom/useModals';
 
 function HomePage(props) {
   const [loginModal, setLoginModal] = useState(false);
@@ -34,18 +35,21 @@ function HomePage(props) {
     URL.revokeObjectURL(enteredData.image);
   }
 
-  function openLoginModal() {
-    setLoginModal(true);
-  }
+  const { openModal, closeModal } = useModals();
 
-  function closeLoginModal() {
-    setLoginModal(false);
-  }
+  const closeLoginModal = () => {
+    closeModal(Login);
+  };
+
+  const openLoginModal = () => {
+    openModal(Login, {
+      onClose: closeLoginModal,
+    });
+  };
 
   return (
     <Fragment>
       <Header onLoginClick={openLoginModal} />
-      {loginModal && <Login onClose={closeLoginModal} />}
       <Main data={props.data} onAddItem={addFoodItem} />
       <Footer />
     </Fragment>

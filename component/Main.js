@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import CardView from '@/component/Card';
 import Dialog from './Dialog';
 import Plus from '../assets/plus-solid.svg';
 import Search from '../assets/magnifying-glass-solid.svg';
 import classes from './Main.module.css';
+import useModals from './custom/useModals';
 
 function Main(props) {
   const [mainData, setMainData] = useState(props.data);
@@ -15,7 +16,6 @@ function Main(props) {
     category: '',
     rating: 0,
   });
-  const [addModalState, setAddModalState] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -25,11 +25,17 @@ function Main(props) {
     });
   }
 
-  const openAddModal = () => {
-    setAddModalState(true);
-  };
+  const { openModal, closeModal } = useModals();
   const closeAddModal = () => {
-    setAddModalState(false);
+    closeModal(Dialog);
+  };
+
+  const openAddModal = () => {
+    openModal(Dialog, {
+      onAddItem: props.onAddItem,
+      onClose: closeAddModal,
+      setMainData: setMainData,
+    });
   };
 
   function filterChange(e) {
@@ -50,25 +56,24 @@ function Main(props) {
     });
   };
 
-  const CardList = mainData.map((ele, index) => {
-    return filtering.category === '' ? (
-      filtering.rating <= ele.score ? (
+  function makeCardList() {
+    return mainData.map((ele, index) => {
+      return filtering.category === '' ? (
+        filtering.rating <= ele.score ? (
+          <CardView value={ele} key={index} />
+        ) : null
+      ) : filtering.category === ele.category &&
+        filtering.rating <= ele.score ? (
         <CardView value={ele} key={index} />
-      ) : null
-    ) : filtering.category === ele.category && filtering.rating <= ele.score ? (
-      <CardView value={ele} key={index} />
-    ) : null;
-  });
+      ) : null;
+    });
+  }
+  const CardList = useMemo(() => {
+    return makeCardList();
+  }, [mainData]);
 
   return (
     <main className={classes.main}>
-      {addModalState && (
-        <Dialog
-          onClose={closeAddModal}
-          onAddItem={props.onAddItem}
-          setMainData={setMainData}
-        />
-      )}
       <div className={classes.main_text}>
         <span>오늘도 맛있는 음식을 드셨나요?</span>
         <span>
