@@ -5,6 +5,7 @@ import Plus from '../assets/plus-solid.svg';
 import Search from '../assets/magnifying-glass-solid.svg';
 import classes from './Main.module.css';
 import useModals from './custom/useModals';
+import MainExample from './MainExample';
 
 function Main(props) {
   const [mainData, setMainData] = useState(props.data);
@@ -39,7 +40,6 @@ function Main(props) {
   };
 
   function filterChange(e) {
-    console.log(e.target.value, e.target.name);
     const { name, value } = e.target;
     setFiltering({
       ...filtering,
@@ -99,7 +99,11 @@ function Main(props) {
         </select>
         <div>
           <input
-            placeholder="원하는 키워드를 입력해주세요."
+            placeholder={
+              mainData.length !== 0
+                ? '원하는 키워드를 입력해주세요.'
+                : '회원이 되시면 기록을 저장할 수 있어요!'
+            }
             name="keyword"
             onChange={handleChange}
             value={search.keyword}
@@ -109,30 +113,39 @@ function Main(props) {
           </button>
         </div>
       </div>
-      <div className={classes.card_view}>
-        <div className={classes.filter_section}>
-          <select
-            name="category"
-            value={filtering.category}
-            onChange={filterChange}
-          >
-            <option value="" disabled>
-              카테고리명
-            </option>
-            <option value="식사">식사</option>
-            <option value="음료">음료</option>
-            <option value="디저트">디저트</option>
-          </select>
-          <select name="rating" onChange={filterChange}>
-            <option value={5}>⭐️⭐️⭐️⭐️⭐️</option>
-            <option value={4}>⭐️⭐️⭐️⭐️ 이상</option>
-            <option value={3}>⭐️⭐️⭐️ 이상</option>
-            <option value={2}>⭐️⭐️ 이상</option>
-            <option value={1}>⭐️ 이상</option>
-          </select>
+
+      {mainData.length === 0 ? (
+        <div className={classes.card_view}>
+          <div className={classes.card_section}>
+            <MainExample />
+          </div>
         </div>
-        <div className={classes.card_section}>{CardList}</div>
-      </div>
+      ) : (
+        <div className={classes.card_view}>
+          <div className={classes.filter_section}>
+            <select
+              name="category"
+              value={filtering.category}
+              onChange={filterChange}
+            >
+              <option value="" disabled>
+                카테고리명
+              </option>
+              <option value="식사">식사</option>
+              <option value="음료">음료</option>
+              <option value="디저트">디저트</option>
+            </select>
+            <select name="rating" onChange={filterChange}>
+              <option value={5}>⭐️⭐️⭐️⭐️⭐️</option>
+              <option value={4}>⭐️⭐️⭐️⭐️ 이상</option>
+              <option value={3}>⭐️⭐️⭐️ 이상</option>
+              <option value={2}>⭐️⭐️ 이상</option>
+              <option value={1}>⭐️ 이상</option>
+            </select>
+          </div>
+          <div className={classes.card_section}>{CardList}</div>
+        </div>
+      )}
     </main>
   );
 }

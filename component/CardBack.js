@@ -2,20 +2,25 @@ import { useRef, useEffect } from 'react';
 import classes from './CardBack.module.css';
 
 function CardBack(props) {
-  const back_data = props.data.value;
+  const back_data = props.data;
   const map_container = useRef();
   let map;
 
   useEffect(() => {
-    const { kakao } = window;
-    kakao.maps.load(() => {
-      const map_option = {
-        center: new kakao.maps.LatLng(back_data.address.y, back_data.address.x),
-        level: 3,
-      };
-      map = new kakao.maps.Map(map_container.current, map_option);
-      displayMarker(back_data.address);
-    });
+    if (back_data.address) {
+      const { kakao } = window;
+      kakao.maps.load(() => {
+        const map_option = {
+          center: new kakao.maps.LatLng(
+            back_data.address.y,
+            back_data.address.x
+          ),
+          level: 3,
+        };
+        map = new kakao.maps.Map(map_container.current, map_option);
+        displayMarker(back_data.address);
+      });
+    }
   }, []);
 
   function displayMarker(place) {
@@ -29,8 +34,8 @@ function CardBack(props) {
     <div className={`${classes.item} ${classes.card_back}`}>
       <div className={classes.address_section} ref={map_container}></div>
       <div className={classes.text_section}>
-        <p>상호명: {back_data.address.place_name}</p>
-        <p>주소: {back_data.address.address_name}</p>
+        <p>상호명: {back_data.address ? back_data.address.place_name : null}</p>
+        <p>주소: {back_data.address ? back_data.address.address_name : null}</p>
       </div>
     </div>
   );

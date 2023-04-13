@@ -13,7 +13,7 @@ function Dialog({ onAddItem, onClose, setMainData }) {
     comment: '',
     image: '',
     score: null,
-    address: '',
+    address: null,
   });
   const image_preview = useRef();
   const image_input = useRef();

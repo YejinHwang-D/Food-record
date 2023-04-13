@@ -8,7 +8,6 @@ async function hadnler(req, res) {
   }
 
   const session = await getSession({ req: req });
-  console.log('session: ', session);
   if (!session) {
     res.status(401).json({ message: '인증되지 않은 사용자입니다.' });
     return;

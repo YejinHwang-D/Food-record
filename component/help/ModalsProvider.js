@@ -20,11 +20,15 @@ const ModalsProvider = ({ children }) => {
   const dispatch = useMemo(() => ({ open, close }), []);
 
   useEffect(() => {
-    window.addEventListener('keydown', () => {
-      const closeComponent = openedModals[openedModals.length - 1];
-      setOpenedModals(openedModals.filter((modal) => modal !== closeComponent));
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const closeComponent = openedModals[openedModals.length - 1];
+        setOpenedModals(
+          openedModals.filter((modal) => modal !== closeComponent)
+        );
+      }
     });
-  });
+  }, []);
 
   return (
     <ModalsStateContext.Provider value={openedModals}>
