@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { getSession } from 'next-auth/client';
 import CardView from '@/component/Card';
 import Dialog from './Dialog';
 import Plus from '../assets/plus-solid.svg';
@@ -31,12 +32,17 @@ function Main(props) {
     closeModal(Dialog);
   };
 
-  const openAddModal = () => {
-    openModal(Dialog, {
-      onAddItem: props.onAddItem,
-      onClose: closeAddModal,
-      setMainData: setMainData,
-    });
+  const openAddModal = async () => {
+    const session = await getSession();
+    if (session) {
+      openModal(Dialog, {
+        onAddItem: props.onAddItem,
+        onClose: closeAddModal,
+        setMainData: setMainData,
+      });
+    } else {
+      alert('로그인 먼저 해주세요!');
+    }
   };
 
   function filterChange(e) {
